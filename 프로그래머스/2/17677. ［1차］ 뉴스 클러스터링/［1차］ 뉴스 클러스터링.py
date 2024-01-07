@@ -24,7 +24,6 @@ def solution(str1, str2):
         else:
             #겹치는 부분
             intersection_arr.remove(i) #빼주기
-    #sum_count = (1 if len(sum_arr) == 0 else len(sum_arr))
     sum_count = len(sum_arr)
     #교집합
     intersection_arr = []
@@ -32,7 +31,6 @@ def solution(str1, str2):
         if i in str1_arr:
             intersection_arr.append(i)
             str1_arr.remove(i)
-    #inter_count = (1 if len(intersection_arr) == 0 else len(intersection_arr))
     inter_count = len(intersection_arr)
     if (len(sum_arr) == 0 and len(intersection_arr) == 0):
         return 65536
