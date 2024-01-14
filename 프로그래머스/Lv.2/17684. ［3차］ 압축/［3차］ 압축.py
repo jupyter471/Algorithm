@@ -6,7 +6,6 @@ def solution(msg):
         dic[chr(i)] = index
         index += 1
         
-    size = len(msg)
     p = 0 # W위치
     msg_len = len(msg)
     while(p < msg_len):
@@ -21,5 +20,4 @@ def solution(msg):
         dic[msg[p:p + find_len+1]] = index
         index += 1
         p += find_len
-    print(answer)
     return answer
