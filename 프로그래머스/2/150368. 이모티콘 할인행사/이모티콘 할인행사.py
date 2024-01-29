@@ -9,8 +9,11 @@ def solution(users, emoticons):
     for sale in sales:
         result = cal(users,sale,emoticons)
         answer.append(result)
+        
     answer.sort(key = lambda x :(-x[0],-x[1]))
     return answer[0]
+
+
 def cal(users,sale,emoticons):
     #계산
     #result = [가입자 수, 이모티콘 총 판매액]
@@ -27,7 +30,6 @@ def cal(users,sale,emoticons):
             result[0] += 1
         else:
             result[1] += cost
-    # print(sale,result)
     return result
 
 
