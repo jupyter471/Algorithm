@@ -4,8 +4,8 @@ def solution(s):
     #같은 값이 연속해서 나타날 때-> 문자 개수 + 반복되는 값
     case = []    
     for i in range(1,len(s)+1):
-        pressed = press(s,i)
-        case.append(pressed)
+        # pressed = press(s,i)
+        case.append(press(s,i))
     return min(case)
 
 #가장 짧은 문자열의 길이 반환
@@ -26,7 +26,6 @@ def press(string,cut):
         #연속될 때
         if ch == comp:
             count += 1
-            
         else:
             #연속아닐 때
             if count > 1:
