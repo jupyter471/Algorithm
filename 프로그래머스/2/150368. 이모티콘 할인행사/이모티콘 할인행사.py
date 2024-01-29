@@ -1,3 +1,4 @@
+#8시15분
 from itertools import product
 def solution(users, emoticons):
     #[서비스 가입 수, 이모티콘 매출액] 반환
@@ -5,7 +6,6 @@ def solution(users, emoticons):
     #emoticons[i] = 가격
     #각 이모티콘 할인율 모든 경우의 수 다 구해야됨
     sales = list(product([10,20,30,40],repeat = len(emoticons)))
-    
     for sale in sales:
         result = cal(users,sale,emoticons)
         answer.append(result)
@@ -22,8 +22,6 @@ def cal(users,sale,emoticons):
         for i,s in enumerate(sale):
             if s >= user[0]:
                 cost += (int(emoticons[i] * ((100-s))/100))
-        # if sale == (40,40,40,40):
-            # print(cost)
         #기준 넘을 경우 서비스 가입
         if cost >= user[1]:
             result[0] += 1
@@ -31,6 +29,9 @@ def cal(users,sale,emoticons):
             result[1] += cost
     # print(sale,result)
     return result
+
+
+
 #1번 플러스 서비스가입자 최대한 늘리기
 #2번 이모티콘 판매액 최대한 늘리기
 
