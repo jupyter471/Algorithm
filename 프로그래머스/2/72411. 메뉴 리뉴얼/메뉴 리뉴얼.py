@@ -14,8 +14,8 @@ def solution(orders, course):
                 else:
                     dict[case] = 1
         print(dict)
-        temp = [k for k,v in dict.items() if (v >= 2 and v == max(dict.values()))]
-        answer += temp
+        temp = [k for k,v in dict.items() if (v >= 2 and v == max(dict.values()))] #Counter().most_common() 사용시 최대값 반환해줌
+        answer += temp  #append가 아니라 + 를 해야 원소값들끼리 저장됨!
     return sorted(answer)
 #course : 2부터 10까지 오름차순
 #answer : 각 course에 따른 메뉴 조합 오름차순
