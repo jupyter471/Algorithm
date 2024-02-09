@@ -1,7 +1,8 @@
 #11시 25분 시작
-#11시43분 런타임에러 why? why!
-#1. head가 한글자인경우
-#2. tail이 없는경우
+#11시43분 런타임에러
+#2. tail이 없는경우! 이게 문제
+# + 숫자가 5글자 이상인 경우 체크? 일단 하긴 함
+#해결 12시3분
 def solution(files):
     #head, number, tail
     dict = {k:v for k,v in enumerate(files)}
@@ -13,14 +14,8 @@ def solution(files):
         for idx,i in enumerate(f):
             #head랑 숫자 쪼개기
             if i.isdigit():
-                #문자가 한글자인 경우
-                if idx == 1:
-                    rest = f[idx:]
-                    print(rest)
-                    temp.append(f[0].lower())
-                else:
-                    rest = f[idx:]
-                    temp.append(f[:idx].lower())
+                rest = f[idx:]
+                temp.append(f[:idx].lower())
                 break
         flag = False
         for idx,r in enumerate(rest):
