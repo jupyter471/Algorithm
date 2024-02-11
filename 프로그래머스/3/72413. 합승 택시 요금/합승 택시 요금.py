@@ -2,28 +2,20 @@ import heapq
 def solution(n, s, a, b, fares):
     #방향없음
     
+    #그래프 생성
     graph = [[] for _ in range(n+1)]
     for u,v,c in fares:
         graph[u].append((v,c))
         graph[v].append((u,c))
-    
-    #각각 따로 갈 때
+    #모든 거리 구해두기
     dist = dj(s,graph,n)
-    a_d = dist[a]
-    b_d = dist[b]
-    #같이 갈 때
-    min_dist = [float('inf')] * (n+1)
+    #a,b 따로 이동할 때 거리
+    cost = dj(s,graph,n)[a] + dj(s,graph,n)[b]
+    #최소거리 구하기
     for v in range(1,n+1):
-        min_dist[v] = get_dist(v,a,b,graph,n) + dist[v]
-    index = min_dist.index(min(min_dist))
-    p = min(min_dist)
-    print(index,p)
-    if a_d < b_d:
-        p,d = a,b
-    else:
-        p,d = b,a
-    a_to_b = dj(p,graph,n)[d]
-    return min_dist[index]
+        if s != v:
+            cost = min(cost, dist[v] + dj(v,graph,n)[a] + dj(v,graph,n)[b])
+    return cost
     # print(a_d,b_d,a_to_b)
     # print(min(a_d+b_d,a_d + a_to_b))
     #다익스트라
