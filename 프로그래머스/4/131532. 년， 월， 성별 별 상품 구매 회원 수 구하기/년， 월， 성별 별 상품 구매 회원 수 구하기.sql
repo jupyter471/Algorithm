@@ -1,0 +1,9 @@
+-- 코드를 입력하세요
+-- 0인 경우 남자를, 1인 경우는 여자
+-- 년, 월, 성별 별로 상품을 구매한 회원수를 집계
+--  성별 정보가 없는 경우 결과에서 제외
+SELECT YEAR(SALES_DATE) YEAR,MONTH(SALES_DATE) MONTH,GENDER, COUNT(distinct USER_INFO.USER_ID) USERS
+FROM ONLINE_SALE, USER_INFO WHERE ONLINE_SALE.USER_ID = USER_INFO.USER_ID
+AND GENDER IS NOT NULL
+GROUP BY 1,2,3
+ORDER BY 1,2,3
