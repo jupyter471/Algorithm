@@ -40,7 +40,6 @@ def dij(k,dist,vert):
             for v,w in vert[k]:
                 if c + w < dist[v]:
                     dist[v] = c + w
-                    # visited[v] = True
                     heapq.heappush(h,(c+w,v))
     return dist
 main()
