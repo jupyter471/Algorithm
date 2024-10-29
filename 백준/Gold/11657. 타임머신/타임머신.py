@@ -1,35 +1,38 @@
-#도시의 개수 N
-#간선 M
-#가중치 0 가능 -> 벨만포드
-#map으로 배열로 설정하고 다 도니깐 시간초과 -> defaultdict 사용
+"""
+N : 노드
+M : 간선 개수
+a,b,c : 시작,도착,비용
+1번 도시에서 나머지 도시로 가는 가장 빠른 시간
+무한 루프 -> -1 출력
+"""
 import sys
 from collections import defaultdict
-INF = float('inf')
-n,m = map(int,input().split())
-graphs = defaultdict(list)
+
+n,m = map(int,sys.stdin.readline().split())
+edge = []
 for _ in range(m):
-    a,b,c = map(int,input().split())   #시작,도착,cost
-    graphs[a-1].append([b-1,c])
-dist = [INF] * n
-dist[0] = 0
-# print(graphs[0])
-#벨만 시작
-k = 0
-negative = False
-for k in range(n):
-    for idx,value in graphs.items(): #조사 시작
-            for nxt,c in value:
-                if dist[idx] != INF and dist[idx] + c < dist[nxt]:
-                    dist[nxt] = dist[idx] + c
-                    if k == n-1:
-                        negative = True
-# print(dist)
-if negative:
-    print('-1')
-else:
-    for d in dist[1:]:
-        if d == INF:
-            print('-1')
-        else:
-            print(d)
-#사이클이 있으면 -1, 없으면 dist 출력 (경로 없을 땐 -1)
+    a,b,c = map(int,sys.stdin.readline().split())
+    edge.append([a-1,b-1,c])
+
+cost = [float('inf')] * n #1번노드에서 각 노드까지의 거리
+
+#매 반복마다 거리 계산 (bellmanford)
+cost[0] = 0
+flag = False
+for i in range(n):
+    for v in edge:
+        #v = [neighbor, cost]
+        if cost[v[0]] != float('inf') and cost[v[0]] + v[2] < cost[v[1]]:
+            cost[v[1]] = cost[v[0]] + v[2]
+            if i == n-1:
+                flag = True
+
+if flag == True:
+    print(-1)
+    exit(0)
+
+for x in cost[1:]:
+    if x == float('inf'):
+        print(-1)
+    else:
+        print(x)
