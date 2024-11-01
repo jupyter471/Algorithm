@@ -55,13 +55,4 @@ def solution(video_len, pos, op_start, op_end, commands):
     return make_format(pos)
 
 def make_format(pos):
-    ans = ""
-    if len(str(pos[0])) == 1:
-        ans += "0"+str(pos[0])
-    else:
-        ans += str(pos[0])
-    if len(str(pos[1])) == 1:
-        ans += ":0"+str(pos[1])
-    else:
-        ans += ":" + str(pos[1])
-    return ans
+    return f"{pos[0]:02d}:{pos[1]:02d}"
