@@ -1,7 +1,7 @@
 N,M = map(int, input().split())
 know = list(map(int, input().split()))
 knowNum = know[0]
-knowList = set(know[1:])
+knowSet = set(know[1:])
 
 #참여할 파티 선택 기준 -> 진실을 아는 사람이 아무도 없어야함 && 사람수가 적은 순으로
 
@@ -14,13 +14,13 @@ for _ in range(M):
 
 for _ in range(M):
     for ele in group:
-        if knowList & ele:
-            knowList.update(ele)
+        if knowSet & ele:
+            knowSet.update(ele)
 
 
 cnt = 0
 for ele in group:
-    if len(ele & knowList) == 0:
+    if ele.isdisjoint(knowSet):
         cnt += 1
 
 print(cnt)
