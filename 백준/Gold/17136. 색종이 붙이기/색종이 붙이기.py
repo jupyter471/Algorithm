@@ -39,6 +39,9 @@ def remove_papers(r,c,size):
 def stick(r,c,cnt):
     #0,0부터 한줄씩 탐색
     global min_count
+    if cnt >= min_count:
+        min_count = min_count
+        return
 
     if c>=10:
         stick(r+1,0,cnt)
