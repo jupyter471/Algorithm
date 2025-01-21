@@ -22,9 +22,9 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             for (int j = i+1; j < n; j++) {
-                if (cards[i] + cards[j] > m) {
-                    break;
-                }
+//                if (cards[i] + cards[j] > m) {
+//                    break;
+//                }
                 for (int k = j+1; k < n; k++) {
                     int temp = cards[i] + cards[j] + cards[k];
                     if (temp > m) {
