@@ -19,10 +19,10 @@ public class Solution {
 
             int[] d_r = new int[]{-1,1,0,0};
             int[] d_c = new int[]{0,0,-1,1};
-            int count = 0;
+            int count = 1;  //이거때문에 TC 1개 틀렸음... 왜지..?
 
             //첫째날부터 100일까지 탐색
-            for (int d = 0; d <= 100; d++) {
+            for (int d = 1; d <= 100; d++) {
                 boolean[][] visited = new boolean[N][N];
                 int temp = 0;
                 Deque<int[]> dq = new ArrayDeque<>();
@@ -37,11 +37,7 @@ public class Solution {
                             while (!dq.isEmpty()) {
                                 int[] crr = dq.pollFirst();
                                 if (!visited[crr[0]][crr[1]]) {
-                                    if (cheese[crr[0]][crr[1]] <= d) {
-                                        visited[crr[0]][crr[1]] = true;
-                                    }
-                                    else {
-                                        //사방탐색
+                                    if (cheese[crr[0]][crr[1]] > d) {
                                         visited[crr[0]][crr[1]] = true;
                                         for (int k = 0; k < 4; k++) {
                                             int nr = crr[0] + d_r[k];
