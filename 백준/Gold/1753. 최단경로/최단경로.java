@@ -1,26 +1,29 @@
 import java.util.*;
+import java.io.*;
 
 public class Main {
 
     static class Node implements Comparable<Node> {
-        int vertex, cost;
+        int v, c;
 
-        public Node(int vertex, int cost) {
-            this.vertex = vertex;
-            this.cost = cost;
+        public Node(int v, int c) {
+            this.v = v;
+            this.c = c;
         }
 
         @Override
-        public int compareTo(Node other) {
-            return Integer.compare(this.cost, other.cost);
+        public int compareTo(Node n) {
+            return Integer.compare(this.c, n.c);
         }
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int v = sc.nextInt(); // 정점 개수
-        int e = sc.nextInt(); // 간선 개수
-        int k = sc.nextInt(); // 시작 정점
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int v = Integer.parseInt(st.nextToken()); // 정점 개수
+        int e = Integer.parseInt(st.nextToken()); // 간선 개수
+
+        int k = Integer.parseInt(br.readLine()); // 시작 정점
 
         List<List<Node>> graph = new ArrayList<>();
         for (int i = 0; i <= v; i++) {
@@ -28,9 +31,10 @@ public class Main {
         }
 
         for (int i = 0; i < e; i++) {
-            int u = sc.nextInt();
-            int v2 = sc.nextInt();
-            int w = sc.nextInt();
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v2 = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
             graph.get(u).add(new Node(v2, w));
         }
 
@@ -39,8 +43,6 @@ public class Main {
         for (int i = 1; i <= v; i++) {
             System.out.println(dist[i] == Integer.MAX_VALUE ? "INF" : dist[i]);
         }
-
-        sc.close();
     }
 
     static int[] dijkstra(int start, int v, List<List<Node>> graph) {
@@ -53,18 +55,19 @@ public class Main {
 
         while (!pq.isEmpty()) {
             Node current = pq.poll();
-            int curNode = current.vertex;
-            int curCost = current.cost;
+            int curNode = current.v;
+            int curCost = current.c;
 
             if (curCost > dist[curNode]) continue;
 
             for (Node next : graph.get(curNode)) {
-                if (dist[curNode] + next.cost < dist[next.vertex]) {
-                    dist[next.vertex] = dist[curNode] + next.cost;
-                    pq.add(new Node(next.vertex, dist[next.vertex]));
+                if (dist[curNode] + next.c < dist[next.v]) {
+                    dist[next.v] = dist[curNode] + next.c;
+                    pq.add(new Node(next.v, dist[next.v]));
                 }
             }
         }
         return dist;
     }
 }
+
