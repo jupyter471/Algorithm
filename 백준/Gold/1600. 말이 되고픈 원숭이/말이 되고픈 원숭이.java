@@ -6,6 +6,12 @@ public class Main {
     static int K,W,H;
     static int[][] map;
     static int ans = Integer.MAX_VALUE;
+                
+    static int[] horsemove_r = {-2,-2,-1,-1,1,1,2,2};
+    static int[] horsemove_c = {-1,1,-2,2,-2,2,-1,1};
+    static int[] dr = {-1,1,0,0};
+    static int[] dc = {0,0,-1,1};
+
     public static void main(String[] args) throws Exception {
         //원숭이 K번 -> 말처럼, 그 외 인접칸 (상하좌우)
         //맨 왼쭉 위 -> 맨 오른쪽 아래 이동
@@ -40,14 +46,12 @@ public class Main {
             int cnt = curr[2];
             int move = curr[3];
 
+//            if (move > ans) continue;
 
             if (r == H-1 && c == W-1) {
-                ans = move;
-                return;
+                 ans = move;
+                 return;
             }
-
-            int[] horsemove_r = {-2,-2,-1,-1,1,1,2,2};
-            int[] horsemove_c = {-1,1,-2,2,-2,2,-1,1};
 
             //말이동
             if (cnt < K) {
@@ -55,24 +59,18 @@ public class Main {
                     int nr = r + horsemove_r[i];
                     int nc = c + horsemove_c[i];
                     if (!inRange(nr,nc) || map[nr][nc] == 1 || visited[nr][nc][cnt+1]) continue;
-                    
                     visited[nr][nc][cnt+1] = true;
                     dq.add(new int[] {nr,nc,cnt+1,move+1});
                 }
             }
 
-            int[] dr = {-1,1,0,0};
-            int[] dc = {0,0,-1,1};
-
+      
             for (int i = 0; i < 4; i++) {
                 int nr = r + dr[i];
                 int nc = c + dc[i];
 
                 if (!inRange(nr,nc) || map[nr][nc] == 1 || visited[nr][nc][cnt]) continue;
-                if (nr == H-1 && nc == W-1) {
-                    ans = move+1;
-                    return;
-                }
+       
                 visited[nr][nc][cnt] = true;
                 dq.add(new int[] {nr,nc,cnt,move+1});
             }
