@@ -45,10 +45,8 @@ public class Main {
     static void union(int a, int b) {
         int p_a = find(a);
         int p_b = find(b);
-        if (p_a != p_b) {
-            if (money[p_a] < money[p_b]) parent[p_b] = p_a;
+        if (money[p_a] < money[p_b]) parent[p_b] = p_a;
             else parent[p_a] = p_b;
-        }
     }
     static int find(int x) {
         if (parent[x] == x) return x;
