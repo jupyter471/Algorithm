@@ -1,47 +1,59 @@
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
-        PriorityQueue<Integer> pq = new PriorityQueue<>(   //10의 배수 먼저
-                Comparator
-                .comparingInt((Integer num) -> num % 10)
-                .thenComparingInt(num -> num));
+    //10의 배수인거 먼저 자름
+    static class Cake implements Comparable<Cake> {
+        int len;
 
+        public Cake(int len) {
+            this.len = len;
+        }
+        @Override
+        public int compareTo(Cake o) {
+            return Integer.compare(this.len % 10, o.len % 10);
+        }
+    }
 
-        int result = 0;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        st = new StringTokenizer(br.readLine());
+        PriorityQueue<Integer> pq = new PriorityQueue<>(
+                Comparator.comparingInt((Integer num) -> num % 10)
+                        .thenComparingInt(num -> num));
+
+        int ans = 0;
         for (int i = 0; i < N; i++) {
-            int num = sc.nextInt();
-            if (num == 10) {
-                result++;
-                continue;
-            }
-            if (num < 10) {
-                continue;
+            int len = Integer.parseInt(st.nextToken());
+            if (len > 10) {
+                pq.add(len);
             }
 
-            pq.add(num);
+            if (len == 10) ans++;
         }
 
-        while (M > 0 && !pq.isEmpty()) {
-            Integer poll = pq.poll();
+        while (M > 0 && !pq.isEmpty()){
+            int len = pq.poll();
+//            System.out.printf("%d %d\n",len,ans);
 
-            if (poll - 10 == 10) {
-                result++;
+            //자르기
+            if (len - 10 == 10) {
+                //자르고 남은게 10
+                ans++;
+            }
+            if (len - 10 > 10) {
+                pq.add(len - 10); //자르고 넣기
             }
 
-            if (poll - 10 > 10) {
-                pq.add(poll - 10);  //자르고 넣기
-            }
-
-            result++;
+            ans++;
             M--;
         }
 
-        System.out.println(result);
+        System.out.println(ans);
     }
 }
