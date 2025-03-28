@@ -1,4 +1,4 @@
--- 코드를 입력하세요
-SELECT A.ANIMAL_ID, A.NAME FROM ANIMAL_INS A JOIN ANIMAL_OUTS B USING(ANIMAL_ID)
-ORDER BY datediff(B.DATETIME,A.DATETIME) DESC
-LIMIT 2
+select o.animal_id, o.name
+from animal_outs o join animal_ins i on o.animal_id = i.animal_id
+order by DATEDIFF(o.datetime, i.datetime) desc
+limit 2;
