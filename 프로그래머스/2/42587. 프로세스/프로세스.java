@@ -13,19 +13,16 @@ class Solution {
         }
 
         Arrays.sort(priorities);
-        ArrayDeque<Integer> prior = new ArrayDeque<>();
-        for (int i = priorities.length - 1; i >= 0; i--) {
-            prior.add(priorities[i]);
-        }
-
+        //ArrayDeque<Integer> prior = new ArrayDeque<>(); -> 얘를 굳이 queue로 안해도 됨
+        int maxP = priorities.length - 1;
         int turn = 1;
         while (true) {
             int curr = dq.pollFirst();
-            if (prior.peekFirst() == map.get(curr)) {
+            if (map.get(curr) == priorities[maxP]) {
                 //대기 중인 프로세스 중 우선순위 가장 높음
                 
                 if (curr == location) return turn;
-                prior.pollFirst();
+                maxP--;
                 turn++;
             }
             else {
