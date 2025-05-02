@@ -18,6 +18,7 @@ class Solution {
         
         while (!dq.isEmpty()) {
             int[] curr = dq.poll();
+            if (curr[0] == n-1 && curr[1] == m-1) return v[n-1][m-1] + 1;
             for (int i = 0; i < 4; i++) {
                 int nr = curr[0] + dr[i];
                 int nc = curr[1] + dc[i];
