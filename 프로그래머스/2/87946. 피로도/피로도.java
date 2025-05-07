@@ -20,8 +20,6 @@ class Solution {
     static void dfs(int cnt, int[][] dungeons) {
         //탐색
         
-        answer = Math.max(answer, cnt);
-        
         for (int i = 0; i < n; i++) {
             if (!visited[i] && power >= dungeons[i][0]) {
                 visited[i] = true;
@@ -31,6 +29,7 @@ class Solution {
                 power += dungeons[i][1];
             }
         }
+        answer = Math.max(answer, cnt);
         return;
     }
 }
