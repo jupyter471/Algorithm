@@ -12,58 +12,42 @@ public class Main {
         N = Integer.parseInt(br.readLine());
         strs = br.readLine().split(" ");
         //System.out.println(strs.length);
-        int[] arr = new int[10];
-        for (int i = 0; i <= 9; i++) {
-            arr[i] = i;
-        }
         //0부터 9까지
         min = "9999999999";
         max = "0";
-        perm(0,0,new int[N+1],arr,new boolean[10]);
+        perm(0,0,new int[N+1],new boolean[10]);
 
         System.out.println(max);
         System.out.println(min);
     }
 
-    static void perm(int depth, int idx, int[] sel, int[] arr, boolean[] visited) {
+    static void perm(int depth, int idx, int[] sel, boolean[] visited) {
         if (depth == sel.length) {
             //부등호 유효 검사
-            if (check(sel)) {
-                //최소 최대 갱신
-                String result = IntStream.of(sel)
-                        .mapToObj(String::valueOf)
-                        .collect(Collectors.joining());
+            //최소 최대 갱신
+            String result = IntStream.of(sel)
+                    .mapToObj(String::valueOf)
+                    .collect(Collectors.joining());
 
-                if (result.compareTo(min) < 0) min = result;
-                if (result.compareTo(max) > 0) max = result ;
-            }
+            if (result.compareTo(min) < 0) min = result;
+            if (result.compareTo(max) > 0) max = result ;
             return;
         }
 
-        if (idx == arr.length) return;
+        if (idx == 10) return;
 
-        for (int i = 0; i < arr.length; i++) {
-            if (!visited[i]) {
-                sel[depth] = arr[i];
+        //여기서 가지치기 해주기!!!
+        for (int i = 0; i < 10; i++) {
+            if (depth == 0 || isValid(sel[depth-1],i,strs[depth-1].charAt(0)) && !visited[i]) {
+                sel[depth] = i;
                 visited[i] = true;
-                perm(depth+1,i,sel,arr,visited);
+                perm(depth+1,i,sel,visited);
                 visited[i] = false;
             }
         }
     }
 
-    static boolean check(int[] sel) {
-        //System.out.println(Arrays.toString(sel));
-        for (int i = 0; i < strs.length; i++) {
-            if (strs[i].charAt(0) == '<') {
-                // a < b
-                if (sel[i] > sel[i+1]) return false;
-            }
-            else {
-                // a > b
-                if (sel[i] < sel[i+1]) return false;
-            }
-        }
-        return true;
+    static boolean isValid(int a, int b, char sign) {
+        return (sign == '<') ? (a<b) : (a>b);
     }
 }
