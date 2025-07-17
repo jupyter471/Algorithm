@@ -4,15 +4,15 @@ import java.io.*;
 public class Main {
     static int N, M;
     static int[][] map;
-static int answer = Integer.MAX_VALUE;
+    static int answer = Integer.MAX_VALUE;
 
     static class Node {
         int weight;
-        char dir;
+        int dir;
         int r;
         int c;
 
-        public Node(int weight, char dir, int r, int c) {
+        public Node(int weight, int dir, int r, int c) {
             this.weight = weight;
             this.dir = dir;
             this.r = r;
@@ -35,28 +35,23 @@ static int answer = Integer.MAX_VALUE;
             }
         }
 
-        Map<Character, int[]> dir = new HashMap<>();
-        dir.put('I', new int[]{0,0}); //맨 처음
-        dir.put('L', new int[]{1, -1});
-        dir.put('D', new int[]{1, 0});
-        dir.put('R', new int[]{1, 1});
+        int[] next = new int[] {-1,0,1};
 
         Deque<Node> pq = new ArrayDeque<>();
         for (int i = 0; i < M; i++) {
-            pq.add(new Node(map[0][i],'I',0,i));
+            pq.add(new Node(map[0][i],-1,0,i));
         }
 
-        char[] directions = new char[] {'L','D','R'};
         while (!pq.isEmpty()) {
             Node n = pq.poll();
-            for (char c : directions) {
-                if (c == n.dir) {
+            for (int i = 0; i < 3; i++) {
+                if (i == n.dir) {
                     //연속 같은 방향
                     continue;
                 }
                 //끝 확인
-                int nr = n.r + dir.get(c)[0];
-                int nc = n.c + dir.get(c)[1];
+                int nr = n.r + 1;
+                int nc = n.c + next[i];
 
                 if (nr == N) {
                     answer = Math.min(answer,n.weight);
@@ -64,7 +59,7 @@ static int answer = Integer.MAX_VALUE;
                 }
 
                 if (inRange(nr,nc)) {
-                    pq.add(new Node(n.weight + map[nr][nc], c, nr, nc));
+                    pq.add(new Node(n.weight + map[nr][nc], i, nr, nc));
                 }
             }
         }
