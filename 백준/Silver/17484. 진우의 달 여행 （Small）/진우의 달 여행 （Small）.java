@@ -1,0 +1,82 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static int N, M;
+    static int[][] map;
+static int answer = Integer.MAX_VALUE;
+
+    static class Node implements Comparable<Node>{
+        int weight;
+        char dir;
+        int r;
+        int c;
+
+        public Node(int weight, char dir, int r, int c) {
+            this.weight = weight;
+            this.dir = dir;
+            this.r = r;
+            this.c = c;
+        }
+
+        @Override
+        public int compareTo(Node n) {
+            return this.weight - n.weight;
+        }
+    }
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N= Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        //NxM
+        map = new int[N+1][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < M; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        Map<Character, int[]> dir = new HashMap<>();
+        dir.put('I', new int[]{0,0}); //맨 처음
+        dir.put('L', new int[]{1, -1});
+        dir.put('D', new int[]{1, 0});
+        dir.put('R', new int[]{1, 1});
+
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        for (int i = 0; i < M; i++) {
+            pq.add(new Node(map[0][i],'I',0,i));
+        }
+
+        char[] directions = new char[] {'L','D','R'};
+        while (!pq.isEmpty()) {
+            Node n = pq.poll();
+            for (char c : directions) {
+                if (c == n.dir) {
+                    //연속 같은 방향
+                    continue;
+                }
+                //끝 확인
+                int nr = n.r + dir.get(c)[0];
+                int nc = n.c + dir.get(c)[1];
+
+                if (nr == N) {
+                    answer = Math.min(answer,n.weight);
+                    continue;
+                }
+
+                if (inRange(nr,nc)) {
+                    pq.add(new Node(n.weight + map[nr][nc], c, nr, nc));
+                }
+            }
+        }
+        System.out.println(answer);
+    }
+
+    static boolean inRange(int r, int c) {
+        return r >= 0 && r < N && c >= 0 && c < M;
+    }
+}
