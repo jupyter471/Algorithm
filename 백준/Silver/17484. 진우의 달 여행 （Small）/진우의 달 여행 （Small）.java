@@ -6,7 +6,7 @@ public class Main {
     static int[][] map;
 static int answer = Integer.MAX_VALUE;
 
-    static class Node implements Comparable<Node>{
+    static class Node {
         int weight;
         char dir;
         int r;
@@ -17,11 +17,6 @@ static int answer = Integer.MAX_VALUE;
             this.dir = dir;
             this.r = r;
             this.c = c;
-        }
-
-        @Override
-        public int compareTo(Node n) {
-            return this.weight - n.weight;
         }
     }
     public static void main(String[] args) throws Exception {
@@ -46,7 +41,7 @@ static int answer = Integer.MAX_VALUE;
         dir.put('D', new int[]{1, 0});
         dir.put('R', new int[]{1, 1});
 
-        PriorityQueue<Node> pq = new PriorityQueue<>();
+        Deque<Node> pq = new ArrayDeque<>();
         for (int i = 0; i < M; i++) {
             pq.add(new Node(map[0][i],'I',0,i));
         }
