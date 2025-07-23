@@ -16,12 +16,10 @@ public class Main {
         }
 
         for (int i = 0; i < M; i++) {
-            Set<String> memo = new HashSet<>();
             String[] line = br.readLine().split(",");
             for (String word : line) {
-                memo.add(word);
+                key.remove(word);
             }
-            key.removeAll(memo);
             System.out.println(key.size());
         }
     }
