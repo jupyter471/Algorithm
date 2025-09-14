@@ -1,5 +1,7 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.StringTokenizer;
 
 public class Main {
     static int R,C;
@@ -18,23 +20,29 @@ public class Main {
             map[i] = br.readLine().toCharArray();
         }
 
-        ans = 1;
-        HashSet<Character> set = new HashSet<>();
-        set.add(map[0][0]);
-        dfs(0,0,set);
+        ans = 0;
+        int mask = 1 << (map[0][0] - 'A');
+        dfs(0,0,mask,1);
         System.out.println(ans);
     }
 
-    static void dfs(int r, int c, HashSet<Character> set) {
-
+    static void dfs(int r, int c, int mask, int depth) {
+        ans = Math.max(ans, depth);
+        if (ans == 26) {
+            return;
+        }
         for (int i = 0; i < 4; i++) {
             int nr = r + dr[i];
             int nc = c + dc[i];
 
-            if (inRange(nr,nc) && set.add(map[nr][nc]))  {
-                ans = Math.max(ans, set.size());
-                dfs(nr,nc,set);
-                set.remove(map[nr][nc]);
+            if (inRange(nr,nc))  {
+                int id = map[nr][nc] - 'A';
+                int bit = 1 << id;
+
+                //아직 지나가지 않은 알파벳
+                if ((mask & bit) == 0) {
+                    dfs(nr,nc,mask | bit, depth + 1);
+                }
             }
         }
 
