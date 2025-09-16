@@ -19,7 +19,6 @@ public class Main {
         }
 
         long bottom = 1;
-        Arrays.sort(line);
         while (bottom <= top) {
             long middle = (bottom + top) / 2;
             if (isPossible(middle)) {
