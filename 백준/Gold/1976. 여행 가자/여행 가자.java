@@ -15,11 +15,11 @@ public class Main {
         }
 
         StringTokenizer st;
-        for (int i = 1; i < N+1; i++) {
+        for (int i = 1; i < N + 1; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j < N+1; j++) {
+            for (int j = 1; j < N + 1 ; j++) {
                 int s = Integer.parseInt(st.nextToken());
-                if (s == 1) {
+                if (s == 1 && j > i) {
                     union(i,j);
                 }
             }
@@ -42,9 +42,9 @@ public class Main {
 
     static int find(int x) {
         if (parent[x] == x) {
-            return parent[x] = x;
+            return x;
         }
-        return find(parent[x]);
+        return parent[x] = find(parent[x]);
     }
 
     static void union(int x, int y) {
