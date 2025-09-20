@@ -1,0 +1,11 @@
+-- 코드를 입력하세요
+-- cart id로 ㅎ개
+WITH N AS (
+    SELECT CART_ID, GROUP_CONCAT(NAME) AS NAME
+    FROM CART_PRODUCTS
+    GROUP BY CART_ID
+)
+
+SELECT CART_ID
+FROM N
+WHERE NAME LIKE ('%Milk%') AND NAME LIkE ('%Yogurt%')
