@@ -1,20 +1,19 @@
---  대여 시작일을 기준으로 2022년 8월부터 2022년 10월까지 총 대여 횟수가 5회 이상인 자동차
--- 해당 기간 동안의 월별 자동차 ID 별 총 대여 횟수(컬럼명: RECORDS)
--- 문제 이해 잘못함! 5개 이상인 자동차들의 월별 횟수를 반환해야함
+-- 2022년 8월부터 2022년 10월까지 대여 횟수 5회
+-- 월별 자동차 id별 총 대여횟수 records
+-- 월 기준 오름, 자동차 id 내림
+-- 0이면 제회
 
--- 5번 이상 대여한 자동차 정보
-WITH CARS(CAR_ID,RECORDS) AS (
-    SELECT CAR_ID,COUNT(*) RECORDS 
-    FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
-    WHERE DATE_FORMAT(START_DATE,"%Y-%m") BETWEEN "2022-08" AND "2022-10"
-    GROUP BY CAR_ID
-    HAVING RECORDS >= 5
-) 
-             
+with history as (
+    select car_id, count(*) as cnt, start_date
+    from CAR_RENTAL_COMPANY_RENTAL_HISTORY
+    where DATE_FORMAT(start_date, '%Y-%m') >= '2022-08'
+    group by car_id
+    having cnt >= 5
+)
 
-SELECT MONTH(START_DATE) AS MONTH,CAR_ID, COUNT(*) AS RECORDS 
-FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
-WHERE CAR_ID IN (SELECT CAR_ID FROM CARS) AND DATE_FORMAT(START_DATE,"%Y-%m") BETWEEN "2022-08" AND "2022-10"
-GROUP BY CAR_ID,MONTH
-HAVING RECORDS <> 0
-ORDER BY MONTH,CAR_ID DESC
+select month(start_date) as MONTH, car_id, count(*) as RECORDS
+from CAR_RENTAL_COMPANY_RENTAL_HISTORY 
+where car_id in (select car_id from history)
+group by car_id, MONTH
+having RECORDS > 0 and month between 8 and 10
+order by 1 asc, 2 desc;
