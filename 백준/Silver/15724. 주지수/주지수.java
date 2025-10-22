@@ -25,22 +25,21 @@ public class Main {
             }
         }
 
-//        for (int i = 0; i < N+1; i++) {
-//            System.out.println(Arrays.toString(sum[i]));
-//        }
-
 
         int K = Integer.parseInt(br.readLine());
 
+        //[r2,c1] - [r1, c2]
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
             int r1 = Integer.parseInt(st.nextToken());
             int c1 = Integer.parseInt(st.nextToken());
             int r2 = Integer.parseInt(st.nextToken());
             int c2 = Integer.parseInt(st.nextToken());
-
-            System.out.println(sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1]);
+            
+            sb.append(sum[r2][c2] - sum[r1-1][c2] - sum[r2][c1-1] + sum[r1-1][c1-1]).append("\n");
         }
+        System.out.println(sb.toString());
 
     }
 }
