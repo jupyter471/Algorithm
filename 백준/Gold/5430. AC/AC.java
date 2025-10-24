@@ -5,13 +5,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int T = Integer.parseInt(br.readLine());
-
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         for (int t = 0; t < T; t++) {
             char[] command = br.readLine().toCharArray();
             int N = Integer.parseInt(br.readLine());
             String input = br.readLine();
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
             if (N == 0) {
                 bw.write(run(new ArrayDeque<>(), command));
             }
@@ -24,9 +23,8 @@ public class Main {
             }
 
             bw.write("\n");
-
-            bw.flush();
         }
+        bw.flush();
     }
 
     static String run(Deque<String> dq, char[] command) {
