@@ -1,78 +1,75 @@
 import java.util.*;
+import java.lang.*;
 import java.io.*;
-public class Main {
+
+// The main method must be in a class named "Main".
+class Main {
+    static int N,M;
+    static int[][] map;
+    static int task;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        String[] input = br.readLine().split(" ");
-        int M = Integer.parseInt(input[0]);
-        int N = Integer.parseInt(input[1]);
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
 
-        //1 : 익음, 0 : 익지 않음 -1 : 없음
-        int[][] tmt = new int[N][M];
-        int tmtcount = 0;
-        int ik = 0;
-        int task = 0;
-        //bfs
-        Deque<int[][]> dq = new ArrayDeque<>();
-        for(int i = 0; i < N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
+        map = new int[N][M];
+        Deque<int[]> dq = new ArrayDeque<>();
+        task = 0;
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                tmt[i][j] = Integer.parseInt(st.nextToken());
-                if (tmt[i][j] == 1) {
-                    tmtcount += 1;
-                    ik += 1;
-                    dq.add(new int[][]{{i,j}});
+                map[i][j] = Integer.parseInt(st.nextToken());
+                if (map[i][j] == 1) {
+                    dq.add(new int[] {i,j});
                 }
-                else if (tmt[i][j] == 0) {
-                    task += 1;
-                    tmtcount += 1;
-                }
+                if (map[i][j] == 0) task++;
             }
         }
 
-        if (tmtcount == ik) {
+        if (task == 0) {
             System.out.println(0);
             return;
         }
 
         int day = 0;
+        boolean[][] visited = new boolean[N][M];
+
         int[] dr = {-1,1,0,0};
         int[] dc = {0,0,-1,1};
-
         while (!dq.isEmpty()) {
-            int len = dq.size();
-            for (int i = 0; i < len; i++){
-                int[][] curr = dq.pollFirst();
-                int r = curr[0][0];
-                int c = curr[0][1];
+            int size = dq.size();
+            for (int i = 0; i < size; i++) {
+                int[] curr = dq.pollFirst();
+                if (visited[curr[0]][curr[1]]) continue;
+                visited[curr[0]][curr[1]] = true;
+                for (int d = 0; d < 4; d++) {
+                    int nr = curr[0] + dr[d];
+                    int nc = curr[1] + dc[d];
 
-                for (int j = 0; j < 4; j++) {
-                    int nr = r + dr[j];
-                    int nc = c + dc[j];
-                    if (inRange(nr,nc,N,M) && tmt[nr][nc] == 0) {
-                        tmt[nr][nc] = 1;
-                        task--;
-                        dq.add(new int[][]{{nr,nc}});
-                    }
+                    if (!inRange(nr,nc)) continue;
+                    if (map[nr][nc] == 1 || map[nr][nc] == -1) continue;
+                    if (visited[nr][nc]) continue;
+                    map[nr][nc] = 1;
+                    task--;
+                    dq.add(new int[] {nr,nc});
                 }
             }
-            if (dq.size() > 0) {
-                day++;
-            }
+            day++;
         }
 
-        if (task > 0) {
+        if (task == 0) {
+            System.out.println(day-1);
+        }
+        else {
             System.out.println(-1);
         }
 
-        else {
-            System.out.println(day);
-        }
 
     }
 
-    static boolean inRange(int r, int c, int N, int M) {
-        return r >= 0 && r < N && c >= 0 && c < M;
+    static boolean inRange(int r, int c) {
+        return 0 <= r && r < N && 0 <= c && c < M;
     }
 }
