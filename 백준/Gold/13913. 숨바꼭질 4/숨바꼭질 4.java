@@ -39,19 +39,19 @@ public class Main {
         }
 
         System.out.println(arr[target]);
-
+        Stack<Integer> stack = new Stack<>();
         //경로 복원
-        Deque<Integer> route = new ArrayDeque<>();
         int curr = target;
         while (curr != -1) {
-            route.add(curr);
+            stack.add(curr);
             curr = parent[curr];
         }
 
-        while (!route.isEmpty()) {
-            System.out.printf("%d ", route.pollLast());
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop()).append(" ");
         }
-
+        System.out.println(sb);
     }
 
     static boolean inRange(int curr) {
