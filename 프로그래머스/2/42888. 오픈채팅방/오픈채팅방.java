@@ -1,29 +1,49 @@
 import java.util.*;
 
 class Solution {
+    static class Msg {
+        String id;
+        String action; 
+        
+        public Msg(String id, String action) {
+            this.id = id;
+            this.action = action;
+        }
+    }
     public String[] solution(String[] record) {
         ArrayList<String> answer = new ArrayList<>();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("Enter","님이 들어왔습니다.");
-        map.put("Leave", "님이 나갔습니다.");
-                
-        HashMap<String, String> id = new HashMap<>();
-        for (String s : record) {
-            String[] arr = s.split(" ");
-            if (arr[0].equals("Enter") || arr[0].equals("Change")) {
-                //새로운 멤버
-                id.put(arr[1],arr[2]);
+        
+        HashMap<String, String> nickid = new HashMap<>();
+
+        HashMap<String, String> msg = new HashMap<>();
+        msg.put("Enter", "님이 들어왔습니다.");
+        msg.put("Leave", "님이 나갔습니다." );
+        
+        ArrayList<Msg> list = new ArrayList<>();
+        for (String str : record) {
+            String[] spl = str.split(" ");
+            String id = spl[1];
+            if (spl[0].equals("Change")) {
+                String name = spl[2];
+                nickid.put(id,name);
+            }
+            else if (spl[0].equals("Enter")) {
+                String name = spl[2];
+                nickid.put(id,name);
+                list.add(new Msg(id, spl[0]));
+            }
+            else {
+                list.add(new Msg(id, spl[0]));
             }
         }
         
-        for (String s : record) {
-            String[] arr = s.split(" ");
+        StringBuilder sb = new StringBuilder();        
+        for (Msg node : list) {
+            String id = node.id;
+            String action = node.action;
             
-            if (arr[0].equals("Change")) continue;
-            answer.add(id.get(arr[1]) + map.get(arr[0]));
+            answer.add(nickid.get(id) + msg.get(action));
         }
-        
-        //System.out.println(answer);
         
         return answer.toArray(new String[0]);
     }
